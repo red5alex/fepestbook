@@ -1,0 +1,127 @@
+\chapter{Introduction}
+
+\section{This Manual}
+\label{sec:fepest:ThisManual}
+
+This chapter aims at FEFLOW users that may or may not have prior experience with PEST.
+Various references to the PEST documentation and other texts are provided within the text for further reading. 
+
+The methods are described in their functional relation to the overall workflow and their relation to other methods. This initial orientation will help to understand how PEST works, and should motivate the user on the way of becoming proficient in uncertainty modelling.
+
+The focus will be (with some exceptions) on those PEST methods that are actually supported by FePEST. It should be emphasized that PEST provides many more, exciting features, which will become available in future releases of FEFLOW. To use them already now, we encourage you to see the PEST manual for further information.
+
+\section{What is PEST?}
+
+PEST is a software widely used in environmental modelling to calibrate models, to determine uncertainty associated to parameters and predictions, and for related tasks. Today, PEST is probably the most commonly used software for the calibration of groundwater models.
+
+However, PEST provides much more than calibration. Besides assisting the modeller in classical calibration tasks, it implements methods that embrace the fact that the outcome of a calibration is not unique, and that the prediction given by a calibrated model is only one out of many possibilities.
+
+Instead of only providing one calibrated model, PEST aims to analyze the spectrum of possible solutions and consequently the uncertainty range associated with parameters and predictions. Of course, these methods (for both traditional calibration and uncertainty analysis) must be learned and understood before they can be successfully applied. Fortunately, good literature is available to do so. See the literature review (section \ref{sec:fepest:literatureReview}) for more information.
+
+PEST is model-independent. Any modelling software that reads input and writes output from a file – or can be adapted to do so – can be linked to PEST. The effort to do this depends on the complexity of the file format.
+
+On a more technical level, PEST can be seen as a toolbox of different programs to setup, run, and evaluate the results of a specific task (e.g. calibration). These programs are all started from the command line prompt, and are configured using command line parameters and/or configuration files without a graphical user interface. FePEST has been developed to provide more convenient access to this functionality when using FEFLOW models – without limiting it. 
+
+\paragraph{Where to get PEST?}
+
+PEST is free software. It is developed by John Doherty (Watermark Numerical Computing) and can be downloaded, including all documentation, from www.pesthomepage.org.
+
+Please also see the FePEST installation instructions for further information.
+
+\section{What is FePEST?}
+
+FePEST links PEST with a FEFLOW model through a convenient graphical user interface.
+
+With FePEST it is possible to use a range of PEST functionality without the need to learn the syntax of its various command line tools and configuration files, and to manually adapt FEFLOWs model files for usage in PEST. Visual feedback on the optimization progress is provided during and after the model run. This will give the user major savings of time both in terms of learning and productive work.
+
+The range of supported PEST features in this release of FePEST includes:
+\begin{itemize}
+\item Model calibration (including regularization and pilot point parametrization)
+\item Subspace methods
+\item Parallelization (locally and/or using remote servers, incl. file transfer)
+\item Linear sensitivity analysis
+\item Predictive analysis (worst-/best case evaluation)
+\end{itemize}
+
+\section{Where to Start…}
+
+\subsection{If you are new to PEST}
+
+Most PEST features required for model calibration using PEST are accessible through FePEST. The user is in many cases not required to make changes to the PEST files and therefore does not need to learn the syntax of the files and commands of PEST.
+
+However: It is still essential that the methods of PEST are understood to be able to interpret the  results of a PEST run correctly! It is suggested that the time saved on understanding PEST's file structure and command line tools is invested in understanding these methods.
+
+\subsection{If you are an experienced PEST user}
+
+PEST provides more functionality than FePEST can cover. We have chosen to implement those workflows that will be most relevant for most users (and more will be implemented in the future). 
+This does not pose a limitation to use FePEST for other methods at all. In fact, it is developed in an "open" way thus that the benefit of a rapid PEST file setup can be used even for unsupported methods. The following aspects will support experienced users to customize their setups:
+
+\begin{itemize}
+
+\item The user interface cites the original names of PEST variables and tools. Experienced users will therefore quickly recognise how the user interface relates to the respective PEST functionality.
+
+\item The file setup created by FePEST strictly follows the syntax specified in the PEST documentation and is fully accessible. The structure of these files - including several batch-files - are designed to allow adaptations for different purposes.
+
+\item Especially if the optimization involves the pilot point method, experienced users will use FePEST for the otherwise elaborate fundamental work steps like the definition of observations and parameters, and then adapt the resulting PEST setup for the particular purpose.
+
+\item Users that are familiar with the FEFLOW IFM programming interface, can use a respective feature in FePEST to allow IFM plug-ins to communicate with PEST directly. This extends the scope of FePEST beyond the pre-defined observation and parameter types.
+\end{itemize}
+
+
+
+\section{Related Literature}
+\label{sec:fepest:literatureReview}
+
+The following list of literature should help users new to PEST to find a reasonably easy access to the science behind its tools.
+Initially, PEST might be sought as a tool to accelerate model calibration. PEST has a very high potential to accomplish this task if the underlying concepts are sufficiently understood. Later, more advanced methods might be applied to understand the uncertainties associated with calibrated models and predictions made by them.
+
+\begin{itemize}
+\item The document \textit{Use of PEST and Some of its Utilities in Model Calibration and Predictive Error Variance Analysis: A Roadmap} provides a fast overview.
+
+\item For a more in-depth understanding, the PEST tutorial \textit{Methodologies and Software for PEST-Based Model Predictive Uncertainty Analysis} is recommended. It provides a comprehensive overview to basic and advanced methods, and conveys important knowledge of the concepts behind them.
+
+\item The \textit{PEST Users Manual} and the \textit{Addendum to the PEST manual} are the primary and most complete reference to all PEST features and tools. This manual will refer to these documents regularly for further reading.
+
+\item Another useful document \textit{Getting the Most out of PEST} describes some general settings and procedures that avoids a major part of typical problems. FePEST uses a major part of these recommendations by default.
+\end{itemize}
+
+\textit{See www.pesthomepage.org  for additional documentation on PEST.
+}
+
+\section{Overall Workflow}
+
+The structure of this document follows the work flows to perform the supported tasks in FePEST. 
+
+After a brief introduction  to some of PEST's methods and algorithms (chapter \ref{sec:fepest:methods}), the following tasks are explained: 
+
+\begin{itemize}
+\item Fundamental Problem Setup (chapter \ref{sec:fepest:fundamentalSetup})
+
+The fundamental problem setup prepares the model to be processed by PEST. These configurations form the basis for all basic and advanced PEST methods. It includes the definition of adjustable parameters, observation and prior knowledge, the choice for subspace regularization methods and the setup of remote servers for parallel computing.
+
+\item Parameter Estimation/History Matching/Calibration (chapter \ref{sec:fepest:parameterEstimation})
+
+The history matching process targets the estimation of a parameter set that satisfies both the historical observations and the prior knowledge. After doing the required settings and starting PEST, the feedback of PEST is reviewed and the resulting model is opened in FEFLOW.
+
+\item Predictive Analysis (chapter \ref{sec:fepest:predictiveAnalysis})
+
+For most environmental models it is possible to find more than one calibrated model, with predictions varying at different levels. Finding maximum or minimum possible key predictions among these models is a simplistic approach to identify worst-case or best-case scenarios of well-posed problems that are compatible with the calibration dataset. 
+
+\item Sensitivity Analysis (chapter \ref{sec:fepest:sensitivity})
+
+FePEST allows to export the sensitivities of the parameters. These can be used to create sensitivity maps in FEFLOW, or be processed with other software or PEST tools.
+
+\item Customized PEST Setups (chapter \ref{sec:fepest:AdvancedMethods}) - for experienced users 
+
+Experienced PEST users may want to use PEST methods that go beyond the functionality of FePEST. Some remarks will be given on this topic.
+\end{itemize}
+
+\section{Acknowledgements}
+
+The author wants to thank John Doherty of Watermark Numerical Computing for his ongoing support of the development of FePEST and its documentation.
+
+John Doherty is the author of PEST and as such provides regular training courses in calibration and predictive uncertainty analysis of numerical models. His documentation of PEST, as well as various papers and tutorial exercises on this topic are a valuable source of information while learning or during on-going work with this software.
+
+Parts of the text and several illustrations used in this manual have been derived from his work.
+
+The FEFLOW model shown in Figure \ref{fig:fepest:PilotPointInterpolation}, Figure \ref{fig:fepest:CondHeadCalib1} and Figure \ref{fig:fepest:CondHeadRegularized} is based on work by John Doherty and C. Moore.

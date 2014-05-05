@@ -1,0 +1,61 @@
+\chapter{Predictive Analysis}
+\label{sec:fepest:predictiveAnalysis}
+
+Predictive Analysis requires completion of the fundamental setup, and it is recommended to successfully run a history matching (calibration) process prior to it. The parameter set found as a result of the latter must have been applied as the initial parameter values to the current FePEST setup (in the Show results panel).
+
+For most environmental models it is possible to find a multitude of calibrated models. Unfortunately, even though these model all match the historical data, the predictions made by these models will nonetheless vary at different levels. The prediction given by the particular model that was found during the calibration therefore represents only one out of many possible prediction.
+
+Predictive analysis is a simple tool in PEST for non-linear model predictive error and uncertainty analysis. It searches for the calibrated model with the maximum or minimum key prediction. In this way it is possible to identify the worst-case or best-case scenarios among the set of calibrated models.
+
+However, use of PEST in predictive analysis model is restricted to well-posed problems, where variability arises from measurement noise alone. In case of an ill-posed problem, advanced users may choose to use PEST methods such running PEST in Pareto mode.
+
+\textit{ Further reading: PEST Manual (5th Ed.)
+Ch. 6: Predictive Analysis}
+
+\section{Required Settings}
+\subsection{Optimization Control}
+
+The required operation mode in PEST is the Predictive analysis mode; the optimization control section of the Problem Settings dialog contains the respective setting.
+
+\subsection{Observation and Type}
+
+Predictive analysis aims to either maximize or minimize a key prediction while maintaining the objective function below a user-specified value. 
+
+The prediction can be any observation (e.g. a specific hydraulic head) defined during the fundamental problem setup. Usually, a weight of zero will be applied to this particular observation to exclude it from the measurement objective.
+
+The Predictive Analysis section of the problem settings dialog provides the settings for the choice of the prediction whose value must be maximized/minimized, and for the value of the objective function which must not be exceeded.
+
+\subsection{Objective Function Limits}
+
+The maximum/minimum prediction is searched under the constraint of maintaining the calibrated state of the model. It is important to define a maximum objective function value below which the model is considered to be calibrated.
+
+For this purpose, Objective function limits are to be chosen. The model is assumed to be calibrated if the value of the objective function is less than the defined Target objective function. 
+
+A common choice is a value which is 5 to 10\% greater than that achieved through objective function minimization through the preceding calibration process. The choice is however always somewhat subjective and can have significant influence on the result. Where the statistics of measurement noise are well known, this limiting objective function can be set in accordance with theory. See the PEST manual for more details.
+
+\textit{ See the PEST Manual (5th Ed.), Ch. 6.2.2: PEST Variables used for Predictive Analysis for a full discussion of these variable.}
+
+
+\subsection{Other settings}
+
+The default settings represent recommendations that are meant to be suitable in most cases of a predictive analysis run. The individual settings will not be explained in detail here, but detailed information is provided in the FePEST help system and the PEST documentation.
+
+
+\section{Starting PEST}
+
+To start the predictive analysis, follow the same steps as described for the parameter estimation in section \ref{sec:fepest:parameterEstimation}.
+
+\section{Output during Predictive Analysis}
+
+The history of the objective function shows the progress of the optimization run. 
+
+In case the initial parameter set does not resemble a calibrated model, PEST will first conduct a calibration to reduce the objective function until it falls below the defined target objective function.
+
+PEST will then start maximizing/minimizing the model prediction. The objective function during the required iterations will be in the allowed range between target objective function and acceptable objective function.
+Outputs after the PEST run.
+
+\section{Estimation results}
+
+The first line of the parameter list shows the maximum or minimum prediction value that was found. The found parameter set resembles the calibrated model that is the worst-case (or best-case scenario), and can again be exported to FEM file.
+
+PEST also generates additional statistical data. These are shown in additional panels after the model run.
