@@ -1,7 +1,23 @@
 \chapter{Troubleshooting}
 
-\section{Derivative Calculation}
+It is not unusual that a PEST optimization does not progress as intended. The resulting parameters might be unrealistic, PEST might fail to reduce the objective function or might fail completely for technical reasons (e.g. after network errors).
+
+Especially for novices this situation can be very challenging (as there is usually no apparent solution at hand) and is a reason to give up (too) early. 
+
+This chapter is a collection of topics explaining "things that can go wrong" and their solution. It is worth reading without facing a particular problem. It is the author's experience that learning success was large especially when problems have been faced (and overcome).
+
+The chapter "if PEST won't optimize" of the PEST manual contains additional information.
+
+\section{Bad Derivative Calculation}
 \label{sec:troubles:derivative}
+
+Especially when working with large and/or physically or geometrically complex models, an increasing (instead of decreasing) objective function might be observed, followed by termination of the iteration.
+
+If Singular Value Decomposition has been activated (which is always recommended because it prevents instabilities of the search algorithm arising from parameter non-uniqueness) this is likely related to bad derivate calculation.
+
+\subsection{Derivative Approximation}
+
+PEST calculates partial derivatives of each parameters / observation pair by a finite-differences-approximation. The parameter is incrementally changed and the change of the observations is recorded.
 
 The correct approximation of the partial derivative between observation and parameter changes is of fundamental importance for the success of a GLMA-based optimization.
 
@@ -24,7 +40,7 @@ The example model shown in \ref{fig:fepest:model-setup} is used to illustrate th
 
 This model converges even when choosing a very strict error criterion, and can therefore be regarded as perfectly “stable” in the FEFLOW context.
 
-Using JACTEST, the hydraulic conductivity is changed in very small increments of 0.2 \%, in a range between 7.8 m/d and 9.5 m/d (Parameter axis). The resulting flux (m3/d) is plotted on the Observation axis of Figure \ref{fig:fepest:stabil-con-body-e1-3_100it}. 
+Using JACTEST (see \ref{sec:fepest:Jactest}), the hydraulic conductivity is changed in very small increments of 0.2 \%, in a range between 7.8 m/d and 9.5 m/d (Parameter axis). The resulting flux (m3/d) is plotted on the Observation axis of Figure \ref{fig:fepest:stabil-con-body-e1-3_100it}. 
 
 \begin{figure}
 	\center
